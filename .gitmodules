@@ -1,0 +1,3 @@
+[submodule "__speedrun"]
+	path = __speedrun
+	url = https://github.com/Sambo3975/__speedrun.git
