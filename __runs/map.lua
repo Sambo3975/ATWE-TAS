@@ -1,9 +1,11 @@
-local pauseplus = require("pauseplus")
-local lu = require("__runs/localutils")
+local lu = require("__runs/__localutils")
+local utils = require("__speedrun/utils")
+local d = utils.dialog
 
 GameData.speedrunProgress = GameData.speedrunProgress or 0
 
 local inputs = {
+	nil, -- this level runs before intro as well
 	{
 		-- enable quick death
 		{lu.pause},
@@ -27,11 +29,18 @@ local inputs = {
 			"j",{1},
 		}},
 	},
+	{ -- navigate to level 2 and enter it
+		{"dotimes",500,{
+			"",{1},
+			"ju",{1},
+		}},
+	},
 }
 
--- GameData.speedrunProgress = GameData.speedrunProgress + 1
-GameData.speedrunProgress = 1
+GameData.speedrunProgress = GameData.speedrunProgress + 1
+-- GameData.speedrunProgress = 1
 
 local currentInputs = inputs[GameData.speedrunProgress] or {}
+-- Misc.dialog(currentInputs)
 currentInputs.global = true
 return currentInputs
