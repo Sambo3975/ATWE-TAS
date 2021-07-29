@@ -1,4 +1,5 @@
 local utils = require("__speedrun/utils")
+utils.showSpeeds = true
 local st = utils.startTimer
 local et = utils.stopTimer
 local d = utils.dialog
@@ -44,11 +45,13 @@ return {
 		{"do",fg}, -- flip gate
 		"r",{6}, -- move to the right a bit so we can make the jump without needing to grab the fence again
 		"jrn",{7}, -- jump to the platform on the right
-		"rn",{"then",{{"x",">=",-197984},{28}}}, -- run off the edge to get down to the first Dragon Coin
+		"rn",{"then",{{"tg"},{10}}},
+		"jrn",{"md"}, -- jump off the edge to get down to the first Dragon Coin.
+		"rn",{"then",{{"x",">=",-197984},{28}}},
 		
 		-- side route for the first Dragon Coin
-		"ln",{"ml"}, -- stop as far to the left on the gate as possible
-		"",{8},
+		"ln",{8}, -- stop as far to the left on the gate as possible
+		-- "",{8},
 		"u",{1},   -- do the ol' grab 'n' flip
 		{"do",fg},
 		"jrn",{"then",{{"y",">=",-200320},{1}}}, -- jump to the next fence
@@ -78,7 +81,7 @@ return {
 		"jrn",{"md"},
 		"u",{1}, -- grab the fence
 		"jrn",{14}, -- jump up to the ledge on the right
-		"rn",{"then",{{"x",">=",-196448},{4}}},
+		"rn",{"then",{{"x",">=",-196448},{3}}},
 		"jrn",{55},
 		"u",{1}, -- grab onto the very right edge of the first fence
 		"jrn",{14},
@@ -86,6 +89,29 @@ return {
 		"jrn",{"then",{{1},{"md"}}}, -- jump up onto the ?-block so we can pass the second fence a bit faster
 		"rn",{"then",{{"tg"},{4}}},
 		"jrn",{1}, -- jump over to the ledge on the right
+		
+		"rn",{"then",{{1},{"tg"}}},
+		-- left path
+		{st},
+		"rn",{16},
+		"jrn",{5},
+		-- {st},
+		"rn",{34},
+		-- {et},
+		-- "ln",{"then",{{"sx","<",0},{"sx",">",-.3}}},
+		"ln",{"ml"},
+		"",{5},
+		"rn",{"then",{{"tg"},{30}}},
+		"jrn",{1},
+		"rn",{"md"},
+		"u",{1},
+		{"do",fg},
+		"jrn",{1},
+		"rn",{"x",">=",-194304},
+		"jrn",{4},
+		"rn",{"then",{{"x",">=",-193984},{4}}},
+		"jrn",{"md"},
+		"u",{1},
 		
 		"rn",{math.huge},
 	},
