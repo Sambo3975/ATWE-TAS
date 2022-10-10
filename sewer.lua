@@ -3,6 +3,9 @@ local st = utils.startTimer
 local et = utils.stopTimer
 local d = utils.dialog
 
+-- Mario arrives in the Big state from the previous level
+-- While testing, you must set it so he will start in that state or this will not work
+
 local fg = { -- flip gate
 	-- 8 ticks for the punch timer (expandedNets:L269), then Mario enters the INVISIBLE forced state until the flip animation completes (L253)
 	"n",{"then",{{8},{"nfs"}}},
