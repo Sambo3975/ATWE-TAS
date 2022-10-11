@@ -44,10 +44,10 @@ return {
 			-- "ju",{math.huge},
 			
 			-- shortcut to section 4
-			{ut.warp()},
-			{tp(-188208,-200416+32)},
-			{function() player.speedY = -10 return -1 end},
-			"u",{math.huge},
+			-- {ut.warp()}, -- if this is uncommented, uncomment line 167 as well
+			-- {tp(-188208,-200416+32)},
+			-- {function() player.speedY = -10 return -1 end},
+			-- "u",{math.huge},
 		
 			"rn",{{"x",">=",-199808},{4}},  -- equivalent to "rn",{"then",{"x",">=",-199808},{4}},
 			"jrn",{1},
@@ -164,7 +164,7 @@ return {
 			"r",{1},
 			"l",{1},
 		}},
-		{ut.endWarp()},
+		-- {ut.endWarp()},
 		{"while",{notPaused},{
 			"r",{1,ignorePause=true},
 			"l",{1},
@@ -223,5 +223,20 @@ return {
 		"ln",{"hnpc"},
 		"rn",{1},
 		"ru",{1}, -- hit third Reznor
+		"rn",{48},
+		"jr",{12},
+		"",{336},
+		{"dotimes",3,{
+			"j",{12},
+			"",{"tg"},
+		}},
+		"jr",{36},
+		"",{384},
+		"ln",{48},
+		"rn",{40},
+		"",{237},
+		"ln",{"hnpc"},
+		"rn",{1},
+		"ru",{1}, -- hit fourth Reznor
 	},
 }
