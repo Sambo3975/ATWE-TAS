@@ -1,7 +1,7 @@
 local ut = require("__speedrun/utils")
 local w, ew, tp, d = ut.warp, ut.endWarp, ut.tp, ut.dialog
 
--- local skipIdx = 1
+-- local skipIdx = 2
 local function skip(idx)
 	return function()
 		return idx <= (skipIdx or -math.huge)
@@ -12,6 +12,12 @@ local level = {
 	[0] = {
 		{"when",{skip(1)},{
 			{w()},
+		}},
+		{"when",{skip(2)},{
+			{tp(-170240,-174208)},
+			"rn",{math.huge},
+		}},
+		{"when",{skip(1)},{
 			{tp(-198944,-200128)},
 			"rn",{math.huge},
 		}},
@@ -24,7 +30,6 @@ local level = {
 		"rn",{math.huge},
 	},
 	{
-		-- {ew()},
 		"rn",{"x",">=",-179680},
 		"jrn",{8},
 		"rn",{"x",">=",-179456},
@@ -106,17 +111,49 @@ local level = {
 		"r",{{"md"},{"mu"}},
 		"jrn",{"md"},
 		"rn",{math.huge},
-	}
+	},
+	{
+		"rn",{"x",">=",-159552},
+		"jrn",{8},
+		"rn",{"x",">=",-159296},
+		"jrn",{"md"},
+		"rn",{{"x",">=",-158624},{2}},
+		"ln",{{"x","<=",-158752},{3}},
+		"rn",{"x",">=",-158336},
+		"arn",{"md"},
+		{"dotimes",2,{
+			"rn",{"tg"},
+			"jrn",{2},
+		}},
+		"rn",{{"tg"},{"ntg"},{"tg"}},
+		"ln",{"ml"},
+		"",{188},
+		"rn",{{"x",">=",-157376},{3}},
+		"ln",{{"ntg"},{1}},
+		"",{"tg"},
+		"jrn",{16},
+		{"dotimes",2,{
+			"rn",{"tg"},
+			"jrn",{"md"},
+		}},
+		"rn",{{"x",">=",-156256-64},{2}},
+		"ar",{1},
+		{"dotimes",8,{
+			"r",{{"md"},{"mu"}},
+		}},
+		"jl",{8},
+		"",{32},
+		"r",{"tg"},
+		"",{101},
+		"r",{"x",">=",-155392},
+		"",{21},
+		"rn",{"x",">=",-155232},
+		"jrn",{4},
+		"rn",{"tg"},
+		"jrn",{10},
+		"rn",{"tg"},
+		"jrun",{math.huge},
+	},
 }
-
--- registerEvent(level, "onTick")
--- function level.onTick()
-	-- for _,v in NPC.iterate(756, player.section) do
-		-- v.x = player.x
-		-- if v.x >= -199452+96 then
-			-- v:kill(1)
-		-- end
-	-- end
--- end
 
 return level
