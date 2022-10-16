@@ -1,7 +1,7 @@
 local ut = require("__speedrun/utils")
 local w, ew, tp, d = ut.warp, ut.endWarp, ut.tp, ut.dialog
 
--- local skipIdx = 3
+-- local skipIdx = 4
 local function skip(idx)
 	return function()
 		return idx <= (skipIdx or -math.huge)
@@ -12,6 +12,12 @@ local level = {
 	[0] = {
 		{"when",{skip(1)},{
 			{w()},
+		}},
+		{"when",{skip(4)},{
+			{tp(-139760,-140512)},
+			{function() player.speedY = -10; return -1; end},
+			{function() triggerEvent("switch"); return -1; end},
+			"u",{math.huge},
 		}},
 		{"when",{skip(3)},{
 			{tp(-154800,-160384)},
@@ -160,8 +166,19 @@ local level = {
 			"rn",{"tg"},
 			"jrun",{math.huge},
 		}},
+		"",{{"tg"},{203}},
+		"rn",{"x",">=",-154368},
+		"arn",{1},
+		"rn",{79},
+		"r",{"x",">=",-153249},
+		"",{256},
+		"l",{"x","<=",-153695},
+		"",{64},
+		"r",{"x",">=",-153377},
+		"",{96},
+		"jlu",{math.huge},
 	},
-	{
+	{ -- 3
 		"rn",{"tg"},
 		"ar",{8},
 		"",{{"md"},{"mu"}},
@@ -194,6 +211,11 @@ local level = {
 		"jln",{1},
 		"ln",{{1},{"tg"}},
 		"jlun",{math.huge},
+	},
+	{ -- 4
+		"rn",{{"nfs"},{"tg"},{"ntg"},{"tg"}},
+		"jrn",{"md"},
+		"rn",{math.huge},
 	},
 }
 
