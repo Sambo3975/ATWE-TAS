@@ -2,6 +2,7 @@
 -- useless outside the episode
 
 local pauseplus = require("pauseplus")
+local betterSMWCamera
 
 local lu = {}
 
@@ -16,6 +17,14 @@ end
 -- return true when the player can input to the pause menu
 function lu.canInputToMenu()
 	return not pauseplus.inResizingTransition and pauseplus.canControlMenu
+end
+
+-- force the SMW-style camera to snap to the player's position so the player can be teleported within a section
+-- without this, it would just slowly scroll toward the player
+function lu.snapCamera()
+	betterSMWCamera = require("betterSMWCamera")
+	betterSMWCamera.cameraData.currentSection = nil -- make the camera "forget" which section it's in so it snaps to the player
+	return -1
 end
 
 return lu

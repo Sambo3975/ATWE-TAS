@@ -1,5 +1,8 @@
 local ut = require("__speedrun/utils")
 local pow, tp, d = ut.pow, ut.tp, ut.dialog
+local w = ut.warp
+local ew = ut.endWarp
+local lu = require("__runs/__localutils")
 
 GameData.watchedReznorIntro = false
 
@@ -7,96 +10,158 @@ local function notPaused()
 	return not Misc.isPaused()
 end
 
-local stoppedShell = false
-local function stopLastShell()
-	Routine.run(function()
-		while not stoppedShell do
-			for _,v in NPC.iterate(113) do
-				local isLastShell
-				if v.x <= -119536 then
-					isLastShell = true
-					for _,o in NPC.iterateIntersecting(v.x + 36, v.y - 16, v.x + 60, v.y + 64) do
-						if o.id == 113 then
-							isLastShell = false
-						end
-					end
-				end
-				if isLastShell then
-					-- Misc.dialog("stopping shell")
-					v.speedX = 0
-					v.x = -119280
-					stoppedShell = true
-					break
-				end
-			end
-			Routine.skip()
-		end
-	end)
-	return -1
+-- GameData.skipIdx = 3
+-- GameData.skipIdx = GameData.skipIdx or 100
+local function skip(idx)
+	return function()
+		return idx <= (GameData.skipIdx or -math.huge)
+	end
 end
 
 return {
 	[0] = {
+		-- before getting the Dragon Coin / after clearing not so watery
 		{"when",{"x","<=",-191488},{
-			-- shortcut to section 1
-			-- {pow(2)},
-			-- {tp(-191312,-200192-player.height)},
-			-- "ju",{math.huge},
-			
-			-- shortcut to section 4
-			-- {ut.warp()}, -- if this is uncommented, uncomment line 167 as well
-			-- {tp(-188208,-200416+32)},
-			-- {function() player.speedY = -10 return -1 end},
-			-- "u",{math.huge},
 		
-			"rn",{{"x",">=",-199808},{4}},  -- equivalent to "rn",{"then",{"x",">=",-199808},{4}},
-			"jrn",{1},
-			"rn",{"snpc"},
-			"jrn",{"md"},
-			"rn",{{"x",">=",-199200},{4}},
-			"jrn",{"md"},
-			"rn",{"snpc"},
-			"jrn",{"md"},
-			"rn",{{"tg"},{4}},
-			"jrn",{"md"},
-			"rn",{"x",">=",-197504},
-			"jrn",{12},
-			"ln",{{"md"},{"mu"}},
-			"jrn",{"md"},
-			"rn",{"snpc"},
-			"arn",{"md"},
-			"rn",{"x",">=",-196064},
-			"jrn",{1},
-			"rn",{{"x",">=",-195776},{3}},
-			"jrn",{1},
-			"rn",{"snpc"},
-			"jrn",{"md"},
-			"rn",{"tg"},
-			"jrn",{2},
-			"rn",{"tg"},
-			"jrn",{12},
-			"rn",{"snpc"},
-			"ln",{{"ml"},{27}},
-			"rn",{{"mr"},{42}},
-			"jrn",{"md"},
-			"rn",{{"snpc"},{4}},
-			"jrn",{"md"},
-			"rn",{"snpc"},
-			"arn",{"md"},
-			"rn",{"x",">=",-193184},
-			"jrn",{1},
-			"rn",{"x",">=",-192992},
-			"jrn",{4},
-			"rn",{"x",">=",-192704-64},
-			"jrn",{20},
-			"rn",{"snpc"},
-			"jrn",{"md"},
-			"rn",{"snpc"},
-			"jrn",{16},
-			"rn",{{"tg"},{3}},
+			-- SKIPS - to be used only during testing
+		
+			-- tp to checkpoint 1
+			{"when",{skip(100)},{
+				"",{1},
+				{lu.snapCamera},
+				{tp(-193024,-200096-128)},
+				"",{{"ntg"},{"tg"}},
+				{function()
+					GameData.skipIdx = 1
+					Level.exit()
+					return -1
+				end},
+			}},
+			{"when",{skip(1)},{
+				{w()},
+			}},
+			{"when",{skip(2)},{
+				{pow(PLAYER_ICE)},
+			}},
+			{"when",{skip(3)},{
+				{tp(-139808,-140128-32)},
+				"",{math.huge}, -- have to add this so we don't fall through to the next tp
+			}},
+			{"when",{skip(2)},{
+				{tp(-153984,-160416)},
+				"u",{math.huge},
+			}},
+			{"when",{skip(1)},{
+				{tp(-187488,-200288)},
+				"rn",{math.huge},
+			}},
 			
-			"jrun",{math.huge},
+			-- NORMAL RUN
+
+			-- before clearing not so watery
+			{"unless",{"x",">",-193120},{
+		
+				-- shortcut to section 1
+				-- {pow(2)},
+				-- {tp(-191312,-200192-player.height)},
+				-- "ju",{math.huge},
+				
+				-- shortcut to section 4
+				-- {ut.warp()}, -- if this is uncommented, uncomment line 167 as well
+				-- {tp(-188208,-200416+32)},
+				-- {function() player.speedY = -10 return -1 end},
+				-- "u",{math.huge},
+			
+				"rn",{{"x",">=",-199808},{4}},  -- equivalent to "rn",{"then",{"x",">=",-199808},{4}},
+				"jrn",{1},
+				"rn",{"snpc"},
+				"jrn",{"md"},
+				"rn",{{"x",">=",-199200},{4}},
+				"jrn",{"md"},
+				"rn",{"snpc"},
+				"jrn",{"md"},
+				"rn",{{"tg"},{4}},
+				"jrn",{"md"},
+				"rn",{"x",">=",-197504},
+				"jrn",{12},
+				"ln",{{"md"},{"mu"}},
+				"jrn",{"md"},
+				"rn",{"snpc"},
+				"arn",{"md"},
+				"rn",{"x",">=",-196064},
+				"jrn",{1},
+				"rn",{{"x",">=",-195776},{3}},
+				"jrn",{1},
+				"rn",{"snpc"},
+				"jrn",{"md"},
+				"rn",{"tg"},
+				"jrn",{2},
+				"rn",{"tg"},
+				"jrn",{12},
+				"rn",{"snpc"},
+				"ln",{{"ml"},{27}},
+				"rn",{{"mr"},{42}},
+				"jrn",{"md"},
+				"rn",{{"snpc"},{4}},
+				"jrn",{"md"},
+				"rn",{"snpc"},
+				"arn",{"md"},
+				"rn",{"x",">=",-193184},
+				"jrn",{1},
+				"rn",{"x",">=",-192992},
+				"jrn",{4},
+				"rn",{"x",">=",-192704-64},
+				"jrn",{20},
+				"rn",{"snpc"},
+				"jrn",{"md"},
+				"rn",{"snpc"},
+				"jrn",{16},
+				"rn",{{"tg"},{3}},
+				"jrun",{math.huge}, -- to section 1
+			}},
+			
+			-- after clearing not so watery
+			"rn",{"x",">=",-192992},
+			"jrn",{6},
+			"rn",{"x",">=",-192736},
+			"jrn",{18},
+			{"dotimes",2,{
+				"rn",{"snpc"},
+				"jrn",{"md"},
+			}},
+			"rn",{"x",">=",-191360},
+			"jrn",{4},
+			"rn",{"x",">=",-190880},
+			"jrn",{1},
+			"rn",{"snpc"},
+			"jrn",{"md"},
+			"rn",{{"snpc"},{16}},
+			"jrn",{8},
+			"rn",{{"md"},{"mu"}},
+			"ln",{"ml"},
+			"",{{"md"},{"mu"}},
+			"j",{1},
+			"rn",{{"snpc"},{8}},
+			"jrn",{"md"},
+			"rn",{"snpc"},
+			"jrn",{{"md"},{"tg"}},
+			"ln",{41},
+			"rn",{"mr"},
+			{"dotimes",80,{
+				{"randomInput",{"u","d"},1}
+			}},
+			"rn",{{"x",">=",-188960},{5}},
+			"jrn",{12},
+			"rn",{"snpc"},
+			"jrn",{"md"},
+			"rn",{"snpc"},
+			"jrn",{1},
+			"rn",{{1},{"tg"}},
+			"jrn",{"md"},
+			"rn",{math.huge}, -- to section 2
 		}},
+		
+		-- after getting the Dragon coin
 		"rn",{{"x",">=",-190880+4},{3}},
 		"jrn",{"md"},
 		"rn",{"snpc"},
@@ -107,11 +172,6 @@ return {
 		"jrn",{1},
 		"rn",{{1},{"tg"}},
 		"ln",{"ml"},
-		-- "",{128},
-		-- {"dotimes",64,{
-			-- "u",{1},
-			-- "d",{1},
-		-- }},
 		{"dotimes",128,{
 			{"randomInput",{"u","d"},1}
 		}},
@@ -139,7 +199,7 @@ return {
 		
 		"",{math.huge},
 	},
-	{ -- section 1
+	{ -- section 1: Dragon Coin
 		-- shortcut back to section 0
 		-- "d",{math.huge},
 	
@@ -153,10 +213,76 @@ return {
 		"",{6},
 		"rn",{"mu"},
 		"ln",{"ml"},
+		"d",{math.huge}, -- back to section 0 (will start on line 165)
+	},
+	{ -- 2
+		-- before getting last Dragon Coin
+		{"when",{"x","<",-154000},{
+			"rn",{"x",">=",-159680},
+			"jrn",{"md"},
+			"rn",{"x",">=",-159200},
+			"jrn",{"md"},
+			"rn",{"tg"},
+			"jrn",{8},
+			"rn",{{"md"},{"mu"}},
+			"jrn",{"md"},
+			"rn",{"x",">=",-158400},
+			"arn",{1},
+			"rn",{"x",">=",-157632},
+			"arn",{4},
+			"rn",{{"md"},{"mu"}},
+			"jrn",{"md"},
+			"rn",{{"tg"},{1}},
+			"jrn",{"md"},
+			"rn",{"tg"},
+			"jrn",{2},
+			"rn",{"md"},
+			"r",{1},
+			"run",{1},
+			"r",{1},
+			"rn",{"snpc"},
+			"ln",{32},
+			"",{16},
+			"jrn",{"md"},
+			"rn",{"snpc"},
+			"jrn",{8},
+			"rn",{"x",">=",-155488},
+			"arn",{1},
+			"rn",{{"md"},{"mu"}},
+			"jrn",{8},
+			"rn",{{"tg"},{4}},
+			"jrn",{"md"},
+			"rn",{"tg"},
+			"jrn",{8},
+			"rn",{"tg"},
+			"jrn",{"md"},
+			"run",{math.huge}, -- to section 3
+		}},
+		
+		-- after getting last Dragon Coin
+		"rn",{"mu"},
+		"jrn",{1},
+		"rn",{"x",">=",-153344},
+		"jrn",{"md"},
+		"rn",{"tg"},
+		"jrn",{"md"},
+		"rn",{"x",">=",-152480},
+		"jrn",{8},
+		"rn",{math.huge},
+	},
+	{ -- 3: Dragon Coin
+		{"when",{skip(3)},{
+			"d",{math.huge},
+		}},
+		"r",{{"nfs"},{1}},
+		"rn",{"x",">=",-139664},
+		"rn",{31},
+		"jln",{1},
+		"ln",{"x","<=",-139536},
+		"jln",{11},
+		"ln",{"tg"},
 		"d",{math.huge},
 	},
-	nil, -- 2
-	nil, -- 3
 	{ -- 4: Reznor fight
 		-- when a shell hits a Reznor, all shells are immediately removed, ruling out the possibility of any significant skip
 		"jln",{"x","<=",-119792+1},
